@@ -1,0 +1,15 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="facebook" clip-path="url(#clip0_6453_42950)">
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M12.0001 0.00524902C18.6246 0.00524902 23.9948 5.37547 23.9948 12C23.9948 18.6244 18.6246 23.9947 12.0001 23.9947C5.37559 23.9947 0.00537109 18.6244 0.00537109 12C0.00537109 5.37547 5.37559 0.00524902 12.0001 0.00524902Z" fill="url(#paint0_linear_6453_42950)"/>
+<path id="Vector_2" d="M13.5584 23.894V14.6291H16.1703L16.5166 11.3682H13.5584L13.5628 9.73606C13.5628 8.88557 13.6436 8.43007 14.8652 8.43007H16.4983V5.1687H13.8857C10.7476 5.1687 9.64322 6.75047 9.64322 9.4109V11.3685H7.68701V14.6296H9.64322V23.7626C10.4053 23.9145 11.1932 23.9947 11.9999 23.9947C12.521 23.9947 13.0416 23.9611 13.5584 23.894Z" fill="white"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_6453_42950" x1="12.0001" y1="-0.213306" x2="12.0001" y2="25.0176" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00B2FF"/>
+<stop offset="1" stop-color="#006AFF"/>
+</linearGradient>
+<clipPath id="clip0_6453_42950">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>

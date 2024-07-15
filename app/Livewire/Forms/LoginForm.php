@@ -2,12 +2,16 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\User;
+use App\Models\verificationCode;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Form;
 
 class LoginForm extends Form

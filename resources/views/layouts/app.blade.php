@@ -11,27 +11,21 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        {{-- <link rel="stylesheet" href="{{ asset("resources/css/custom.css") }}">
+        <script src="{{ asset("resources/js/custom.js") }}" defer></script> --}}
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/css/custom.css', 'resources/js/custom.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            <livewire:layout.navigation />
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
+        <canvas id="gradient-canvas" data-transition-in></canvas>
+        <div class="relative z-10 flex flex-row min-h-screen">
+            <livewire:layout.sidebar />
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-1">
                 {{ $slot }}
             </main>
         </div>
-        <livewire:chatbox/>
+        {{-- <livewire:chatbox/> --}}
     </body>
 </html>

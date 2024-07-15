@@ -17,16 +17,45 @@ new class extends Component
 }; ?>
 
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    <div class="navbar bg-base-100">
+        <div class="flex-none">
+          <button class="btn btn-square btn-ghost" for="main-drawer" >
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
+        </div>
+        <div class="flex-1">
+          <a class="text-xl btn btn-ghost">daisyUI</a>
+          <button wire:click="logout" class="w-full text-start">
+            <x-dropdown-link>
+                {{ __('Log Out') }}
+            </x-dropdown-link>
+        </button>
+        </div>
+        <div class="flex-none">
+          <button class="btn btn-square btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-5 h-5 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+          </button>
+        </div>
+      </div>
     <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="flex items-center shrink-0">
-                    <a href="{{ route('dashboard') }}" wire:navigate>
-                        <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
-                    </a>
-                </div>
+
+                <x-slot:brand>
+                    {{-- Drawer toggle for "main-drawer" --}}
+                    <label for="main-drawer" class="mr-3 lg:hidden">
+                        <x-icon name="o-bars-3" class="cursor-pointer" />
+                    </label>
+
+                    {{-- Brand --}}
+                    <div class="flex items-center shrink-0">
+                        <a href="{{ route('dashboard') }}" wire:navigate>
+                            <x-application-logo class="block w-auto text-gray-800 fill-current h-9" />
+                        </a>
+                    </div>
+                </x-slot:brand>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

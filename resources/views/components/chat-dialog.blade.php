@@ -1,7 +1,7 @@
 @props(['messages', 'color', 'name', 'toMethod'])
-<div x-data="{ open: true }">
+<div x-data="{ open: true }" class="">
     <div :class="{ '-translate-y-0': open, 'translate-y-full': !open }"
-        class="fixed h-64 transition-all duration-300 transform w-72 bottom-10 right-14 ">
+        class="fixed z-50 h-64 transition-all duration-300 transform w-72 bottom-10 right-14">
         <div class="">
             <button @click="open = !open" type="button" :class="{ 'text-white hover:bg-{{ $color }}-400': open }"
                 class="w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-white rounded-t-lg hover:bg-{{ $color }}-400 bg-{{ $color }}-600">

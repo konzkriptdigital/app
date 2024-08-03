@@ -2,26 +2,27 @@
 
 namespace App\Events;
 
+use App\Models\Account;
 use App\Models\User;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class MessageEvent implements ShouldBroadcastNow
+class AccountCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-    public function __construct(public string $name, public String $text, public User $user)
+    public function __construct(
+        public Account $account,
+    )
     {
-        // dd($name . ': ' . $text, $user->toArray());
         //
     }
 
@@ -32,20 +33,19 @@ class MessageEvent implements ShouldBroadcastNow
      */
     public function broadcastOn(): Channel
     {
-        // return new Channel("messages");
-        return new PrivateChannel('messages.1');
+        logger($this->account->company->id);
+        return new PrivateChannel("accounts.{$this->account->company->id}");
+        // return new Channel('accounts');
     }
 
+
     /**
-     * Get the channels the event should broadcast on.
+     * Get the data to broadcast.
      *
-     * @return array<int, \Illuminate\Broadcasting\Channel>
+     * @return array<string, mixed>
      */
-    // public function broadcastOn(): array
-    // {
-    //     return [
-    //         new PrivateChannel('messages.'.$this->user->id),
-    //         // ...
-    //     ];
-    // }
+    public function broadcastWith(): array
+    {
+        return ['account' => $this->account];
+    }
 }

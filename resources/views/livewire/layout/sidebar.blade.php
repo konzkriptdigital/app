@@ -44,7 +44,7 @@ new class extends Component
                             );
                         }
                     @endphp
-                    <span class="capitalize">
+                    <span class="capitalize user--name-abbreviation">
                         {{ $initials }}
                     </span>
                 @endif

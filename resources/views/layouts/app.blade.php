@@ -19,13 +19,18 @@
     <body class="font-sans antialiased">
         <canvas id="gradient-canvas" data-transition-in></canvas>
         <div class="relative z-10 flex flex-row min-h-screen">
-            <livewire:layout.sidebar />
+
+            @auth
+                <livewire:layout.sidebar />
+            @endauth
 
             <!-- Page Content -->
             <main class="flex-1">
                 {{ $slot }}
             </main>
         </div>
-        {{-- <livewire:chatbox/> --}}
+        <div class="z-50">
+            <livewire:chatcomponent/>
+        </div>
     </body>
 </html>

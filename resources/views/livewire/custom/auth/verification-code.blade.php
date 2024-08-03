@@ -28,38 +28,45 @@ new #[Layout('layouts.guest')] class extends Component
     public $codes = [];
     public $errorMessage;
 
-    #[On('updateCode')]
-    public function updateCode ()
-    {
-
-        $code = join('', $this->codes);
-
-        if (strlen($code)) {
-
-            // dd($code);
-            $verify = ModelsVerificationCode::where('code', $code)
-                ->with('user')
-                ->first();
-            if ($verify) {
-                Auth::login($verify->user);
-                $this->redirectIntended('dashboard');
-            }
-            else {
-                $this->errorMessage = "The code is invalid or has been used";
-            }
-        }
-    }
-
     public function mount ()
     {
         $this->codes = array_fill(0, 6, '');
         $this->user = User::where('email', $this->email)->first();
 
-        $targetTime = $this->user->otp->updated_at;
+        $targetTime = $this->user->updated_at;
         $this->targetTime = strtotime($targetTime) * 1000; // Milliseconds for JavaScript
 
         if(!$this->user) {
             $this->redirectIntended(route('login'));
+        }
+    }
+
+    #[On('checkOtpCode')]
+    public function checkOtpCode ()
+    {
+        $code = join('', $this->codes);
+
+        if (strlen($code) === 6) {
+            $timezone = config('app.timezone');
+            $currentTime = Carbon::now($timezone);
+            $otpExpiresAt = Carbon::parse($this->user->otp_secret_expires_at, $timezone);;
+
+            if($otpExpiresAt->lessThan($currentTime)) {
+                $this->errorMessage = "The code is expired";
+            }
+            else {
+                if($this->user->otp_secret === $code) {
+                    $this->user->otp_secret = null;
+                    $this->user->otp_secret_expires_at = null;
+                    $this->user->email_verified_at = Carbon::now();
+                    $this->user->save();
+                    Auth::login($this->user);
+                    $this->redirectIntended('dashboard');
+                }
+                else {
+                    $this->errorMessage = "The code is invalid or has been used";
+                }
+            }
         }
     }
 
@@ -107,6 +114,9 @@ new #[Layout('layouts.guest')] class extends Component
                         type="text"
                         inputmode="numeric"
                         maxlength="1"
+                        pattern="[0-9]"
+                        min="0"
+                        max="9"
                         class="border border-[#2b2a351f] w-14 h-14 text-4xl text-center rounded-lg"
                         @input="validateInput($event, {{ $i }})"
                         @paste="handlePaste(event)"
@@ -200,7 +210,7 @@ new #[Layout('layouts.guest')] class extends Component
                         });
                     }
                 }
-                $wire.updateCode();
+                $wire.checkOtpCode();
             },
             handlePaste(event) {
                 event.preventDefault();
@@ -224,7 +234,7 @@ new #[Layout('layouts.guest')] class extends Component
                             lastInput.select();
                         });
                     }
-                    $wire.updateCode();
+                    $wire.checkOtpCode();
                     console.log('pasted =>> ', pasteData, $wire.codes)
                 }
 
@@ -297,7 +307,7 @@ new #[Layout('layouts.guest')] class extends Component
                 }
 
                 // Emit Livewire event to check OTP completeness
-                // Livewire.emit('updateCode');
+                // Livewire.emit('checkOtpCode');
 
             },
             handleFocus(event) {

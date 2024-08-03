@@ -25,7 +25,11 @@ class User extends Authenticatable
         'google_id',
         'facebook_id',
         'avatar',
-        'is_finish'
+        'is_finish',
+        'otp_secret',
+        'otp_secret_expires_at',
+        'first_name',
+        'last_name',
     ];
 
     /**
@@ -52,12 +56,31 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the otp associated with the User
+     * Get the company associated with the User
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function otp(): HasOne
+    public function company(): HasOne
     {
-        return $this->hasOne(VerificationCode::class);
+        return $this->hasOne(Company::class);
     }
+
+    public function hasAccounts ()
+    {
+        $comapny = $this->company;
+        if(! $comapny) {
+            return false;
+        }
+
+        return $comapny->accounts()->exist();
+    }
+    // /**
+    //  * Get the otp associated with the User
+    //  *
+    //  * @return \Illuminate\Database\Eloquent\Relations\HasOne
+    //  */
+    // public function otp(): HasOne
+    // {
+    //     return $this->hasOne(VerificationCode::class);
+    // }
 }
